@@ -1,0 +1,40 @@
+\onehalfspacing
+\newcommand{\likeheader}[1]{
+	\begin{center}
+	\textbf{\MakeUppercase{#1}}
+	\end{center}
+}
+\newcommand{\soeq}[1]{%equals auto numeration
+\begin{equation}
+	#1
+\end{equation}
+}
+\newcommand{\anonsection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}%without numeration in table of contents 
+% dot filling, see below
+\usepackage{tocloft}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+%change semicolon to defis in pictures:
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{defffis}{ -- }
+\captionsetup{justification=centering, labelsep=defffis}
+%change Рис. to Рисунок
+\renewcommand{\figurename}{Рисунок}
+%code listings
+\lstset{%
+	basicstyle=\footnotesize,
+	showstringspaces=false,
+	extendedchars=true,
+}
+% dotfilling in table of contents
+\renewcommand\cftsecleader{\cftdotfill{\cftdotsep}}
+\def\capfigure{figure}
+\makeatletter
+     \renewcommand{\l@section}{\@dottedtocline{1}{0.4cm}{0.4cm}}
+     \renewcommand{\thesection}{\arabic{section}}
+     \renewcommand{\section}{\@startsection{section}{1}{0.6cm}{-3ex plus -1ex minus -.5ex}{2.2ex plus.2ex}{\bfseries\Large}}
+\makeatother
+\makeatletter
+     \renewcommand{\l@subsection}{\@dottedtocline{2}{0.8cm}{0.8cm}}
+     \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+     \renewcommand{\subsection}{\@startsection{subsection}{2}{0.6cm}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus.2ex}{\bfseries}}
+\makeatother
