@@ -9,11 +9,10 @@ tau = 0.5
 T = 3
 # Function definitions
 u1_def = "sin(pi*x[0])*sin(pi*x[1])"
-u2_def = "sin(pi*x[0])*sin(pi*x[1])"
 phi_def = u1_def
-f2_def = "0"
+f2_def = "10*(t+1)*sin(pi*x[0]*x[1])"
 psi_def = "sin(pi*x[0])*sin(pi*x[1])"
-f1_def = "0"
+f1_def = "20*t*sin(pi*x[0]*x[1])"
 # Defining [0,1]x[0,1] mesh with finite elements of Lagrange type
 mesh = UnitSquareMesh(n, n)
 V = FunctionSpace(mesh, "Lagrange", 1)
@@ -37,11 +36,10 @@ ds = Measure("ds")[boundaries]
 u_omega2_layer0 = TrialFunction(V2)
 v = TestFunction(V2)
 n = FacetNormal(mesh2)
-f1 = Constant(f1_def)
-f2 = Constant(f2_def)
+f1 = Expression(f1_def, t=0)
+f2 = Expression(f2_def, t=0)
 psi = Expression(psi_def)
 u_0 = Expression(u1_def)
-
 # ------ Second layer
 
 u2_1 = TrialFunction(V2)
@@ -78,9 +76,11 @@ f1 = Expression(f1_def, t=t)
 while t <= T:
     u_np1 = TrialFunction(V)
     v = TestFunction(V)
+    f1.t = t
+    f2.t = t
     a = u_np1*v*dx(1) + tau*u_np1*v*dx(2) + (tau**2)*inner(grad(u_np1), grad(v))*dx
     # a = 1/t**2*u_np1*v*dx(1) + inner(grad(u_np1), grad(v))*dx
-    L = (2*u_n - u_nm1)*v*dx(1) + tau * u_n * v * dx(2)
+    L = (2*u_n - u_nm1)*v*dx(1) + tau * u_n * v * dx(2) + tau**2 * f1 * v * dx(1) + tau**2 * f2 * v * dx(2)
     # L = f1*v*dx(1) + f2*v*dx(2) + 1/t**2*(2*u_1 - u_0)*v*dx(1)
 
     u_np1 = Function(V)
@@ -88,7 +88,8 @@ while t <= T:
     t += tau
     u_nm1 = u_n
     u_n = u_np1
-    # plot (u_np1, title="t={}".format(t))
+    p = plot (u_np1, title="t={}".format(t), interactive=False)
+    p.write_png('t={}'.format(t))
 print norm(u_np1, 'l2')
 plot(u_np1, title="t={}".format(t))
 print "t = {}".format(t)

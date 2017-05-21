@@ -1,0 +1,61 @@
+\subsection{Постановка задачи сопряжения для уравнения гиперболо параболического типа}
+Пусть ограниченная область $\Omega \subset  \mathbb{R}^2 $ с границей $\partial \Omega$ разбивается кривой 
+$\Gamma$ на две подобласти $\Omega_1$ и $\Omega_2$. В области $\Omega_2$ будем рассматривать уравнение параболического типа,
+ а в $\Omega_1$ -- уравнение гиперболического типа по $t$. На $\partial \Omega$ задаются граничные условия, на $\Gamma$ -- условия сопряжения. Задача формулируется следующим образом, для неизвестной функции $u$:
+$$
+u(x) =
+  \begin{cases}
+    u_1, \quad x \in \Omega_1\\
+    u_2, \quad x \in \Omega_2 \\
+  \end{cases}
+$$
+рассмотрим следующие уравнения:
+\begin{equation}
+    \pdtt{u_1} = div(k_1(x)gradu_1) + f_1(x, t), \quad x \in \Omega_1,~t > 0,
+    \label{eq:def1}
+\end{equation}
+
+\begin{equation}
+    \pdt{u_2} = div(k_2gradu_2) + f_2(x, t)
+    \label{eq:def2}
+\end{equation}
+
+Уравнения (1) и (2) дополним граничными условиями Дирихле:
+\begin{equation}
+     u = 0, \quad x \in \parom.
+    \label{eq:dirichlet}
+\end{equation}
+
+На границе раздела задаются условия сопряжения:
+\begin{equation}
+    (k_1(x)gradu_1, \ov n) = (k_2(x)gradu_2, \ov n), \quad x \in \Gamma ,
+    \label{eq:conjugation}
+\end{equation}
+$$ u_1(x,t) = u_2(x, t), \quad x \in \Gamma$$
+
+Также в области $\Omega_1$ задаются начальные условия:
+\begin{equation}
+     u_1(x, 0) = \varphi_1(x), \quad x \in \Omega_1 
+     \label{eq:start1}
+\end{equation}
+
+\begin{equation}
+     \pdt{u_1}(x, 0) = \psi(x), \quad x \in \Omega_1 
+     \label{eq:start2}
+\end{equation}
+
+\begin{equation}
+     u_2(x, 0) = \varphi_2(x), \quad x \in \Omega_2
+     \label{eq:start3}
+\end{equation}
+
+Пусть $k(x)$:
+$$
+k(x) =
+  \begin{cases}
+    k_1, \quad x \in \Omega_1\\
+    k_2, \quad x \in \Omega_2 \\
+  \end{cases}
+$$
+
+Известно, что задача (\ref{eq:def1}) -  (\ref{eq:start3}) имеет единственное решение 
