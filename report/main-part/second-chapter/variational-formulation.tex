@@ -1,3 +1,110 @@
-\subsection{Вариационная формулировка задачи сопряжения гиперболо параболического уравнения}<++>
+\subsection{Вариационная формулировка задачи сопряжения гиперболо параболического уравнения}
+
+\begin{equation}
+     V = \{u: u_1: x \in \Omega_1; u_2: x \in \Omega_2; u=0, x \in \parom; \text{выполняются условия сопряжения} (4) \} 
+     \label{eq:v-space}
+\end{equation}
+
+\begin{equation}
+     \hat{V} = \{v \in H^1(\Omega), v=0, x \in \parom \} 
+     \label{eq:v-hat-space}
+\end{equation}
 
 
+Пространство $H^1$ - пространство Соболева, содержащие такие функции $v$,
+что функции $v^2$  и $||\nabla v||^2$ имеют конечные интегралы по области $\Omega$ \\
+
+Вариационная задача строится следующим образом: домножаем уравнения (\ref{eq:def1})-(\ref{eq:def2}) на $v \in V$ с обеих сторон
+и интегрируем их по пространству. Уравнение (1) интегрируем по пространству
+$\Omega_1$, уравнение (2) интегрируем по пространству $\Omega_2$. \\
+Для преобразования подыинтегральных выражений вида $ div(\ov a) v$ применяем формулу Остроградского:
+
+$$ div(\ov a) v = div(\ov a v) - (\ov a, gradv)$$
+
+$$ \int_{\Omega_1} \pdtt{u} v dx  = \int_{\Gamma} v(k_1 gradu_1, \ov n) dS - \int_{\Omega_1}(k_1 gradu_1, gradv)dx + \int_{\Omega_1} f_1vdx  $$
+
+Применим начальное условие Дирихле (3) и получим:
+
+\begin{equation}
+    \int_{\Omega_1} \pdtt{u} v dx  = \int_\Gamma v(k_1 gradu_1, \ov n) dS - \int_{\Omega_1}(k_1 gradu_1, gradv)dx + \int_{\Omega_1} f_1vdx 
+    \label{eq:1-v}
+\end{equation}
+
+
+$\ov n$ - внешняя нормаль к области $\Omega_1$ от границы $\Gamma$.
+Члены вида $(grad u, \ov n)$ - производные по направлению от границы. 
+Функция $v$ в литературе называется тестовой функцией(Test Function)[3], $u$ - триальной функцией(Trial Function).
+
+Домножим уравнение (2) на тестовую функцию $v$ с обеих сторон, проинтегрируем полученное равенство по области $\Omega_2$ и применим условие, что $v = 0, x \in \parom$ :
+
+\begin{equation}
+    \int_{\Omega_2} v\pdt{u_2} = \int_{\parom_2} k_2(x)v(grad u_2, \ov n)dS - \int_{\Omega_2}(k_2(x) gradu_2, grad v) dx + \int_{\Omega_2} f_2vdx
+    \label{eq:2-v}
+\end{equation}
+
+
+К уравнению (\ref{eq:1-v}) прибавим (\ref{eq:2-v}), применяя условие сопряжения (\ref{eq:conjugation}):
+
+\begin{equation}
+    \int_{\Omega_1} \pdtt{u_1} v dx + \int_{\Omega_2}\pdt{u_2}vdx  = -\int_{\Omega} k(x)(gradu, gradv)dx + \int_{\Omega} fv dx
+    \label{eq:generic}
+\end{equation}
+
+
+Таким образом, мы получили уравнение (\ref{eq:generic}) для всей области $\Omega$ вместо
+исходных (\ref{eq:def1}), (\ref{eq:def2}) для $\Omega_1$ и $\Omega_2$. Заметим, что (\ref{eq:generic}) равносильно уравнениям (\ref{eq:def1})-(\ref{eq:def2}).\\
+
+Произведем дискретизацию по времени. Разобьем отрезок $[0, T]$ на $N$ частей с шагом $\tau$
+и распишем член $\pdtt{u}$ и $\pdt{u}$ по формуле разностной производной:
+\begin{equation}
+     \pdt{u} = \frac{u^{n+1}u^{n}}{\tau} 
+     \label{eq:pdt-discr}
+\end{equation}
+\begin{equation}
+     \pdtt{u} = \frac{u^{n+1} - 2 u^n + u^{n-1}}{\tau^2} 
+     \label{eq:pdtt-discr}
+\end{equation}
+
+Домножим на $v$ и проинтегрируем начальные условия (\ref{eq:start2}). Получим:
+\begin{equation}
+    \int_{\Omega_1}\pdt{u_1}vdx = \int_{\Omega_1}\psi vdx
+    \label{eq:psi-v}
+\end{equation}
+
+Подставим в (\ref{eq:psi-v}) выражение (\ref{eq:pdt-discr}):
+$$\int_{\Omega_1} \frac{u_1^1-u_1^0}{\tau}vdx = \int_{\Omega_1}\psi vdx $$
+
+После нехитрых преобразований получим конструкцию вида:
+
+\begin{equation}
+     a(u^{1}, v) = L(v) 
+     \label{eq:al-first-layer}
+\end{equation}
+
+
+Где:
+$$ a_1(u^{n + 1}) = \int_{\Omega_1}u_1vdx $$
+$$ L_2(v) = \int_{\Omega_1}\varphi_1 vdx + \tau\int_{\Omega_1}\psi vdx $$
+
+В литературе $a$ называется билинейной формой, а $L$ - линейной формой.
+
+Таким образом мы получили разложение для $\Omega_1$ на первом слое. Теперь мы должны получить соответствующее разложение для $\Omega_2$. Для этого воспользуемся уравнением (\ref{eq:generic});
+
+$$ \int_{\Omega_2}vdx = \int_{\Gamma}k_1(gradu_1^1, \ov n)vds - \int_{\Omega_2}k_2(gradu_2^1, gradv)dx + \int_{\Omega_2}f_2v_2dx $$
+
+После преобразований получим окончательное выражение линейной и билинейной формы для первого слоя на $\Omega_2$:
+
+$$ a_2(u_2^1, v) = \int_{\Omega_2}vdx + \tau\int_{\Omega_2}^{}k_2(gradu_2^1, gradv)dx $$
+$$ L_2(v) = \int_{\Gamma}(gradu_1^1, \ov n)vdS + \int_{\Omega_2}^{}vdx vdx$$
+
+Проделаем аналогичные преобразования(перенос членов в левую и правые части) для (\ref{eq:generic}):
+
+\begin{equation}
+    a(u, v) = \int_{\Omega_2}^{}vdx + \tau\int_{\Omega_2}^{}u^{n+1}vdx + \tau^2\int_{\Omega}^{}k(gradu^{n+1}, gradv)dx
+    \label{eq:a-variational-generic}
+\end{equation}
+
+\begin{equation}
+    L(v) = \int_{\Omega_1}^{}(2u^n - u^{n-1})vdx + \tau\int_{\Omega_2}^{}u^nvdx + \tau^2\int_{\Omega}^{}fvdx   
+    \label{}
+\end{equation}
