@@ -1,7 +1,9 @@
 \subsection{Вариационная формулировка задачи сопряжения гиперболо параболического уравнения}
 
+Для применения метода конечных элементов введем следующие пространства:
+
 \begin{equation}
-     V = \{u: u_1: x \in \Omega_1; u_2: x \in \Omega_2; u=0, x \in \parom; \text{выполняются условия сопряжения} (4) \} 
+     V = \{u: u_1: x \in \Omega_1; u_2: x \in \Omega_2; u=0, x \in \parom;\} 
      \label{eq:v-space}
 \end{equation}
 
@@ -14,9 +16,67 @@
 Пространство $H^1$ - пространство Соболева, содержащие такие функции $v$,
 что функции $v^2$  и $||\nabla v||^2$ имеют конечные интегралы по области $\Omega$ \\
 
-Вариационная задача строится следующим образом: домножаем уравнения (\ref{eq:def1})-(\ref{eq:def2}) на $v \in V$ с обеих сторон
-и интегрируем их по пространству. Уравнение (1) интегрируем по пространству
-$\Omega_1$, уравнение (2) интегрируем по пространству $\Omega_2$. \\
+На нулевом слое нам известно точное значение функции $u$. Это значение можно увидеть из начальных условий (\ref{eq:start1}), (\ref{eq:start3}).
+
+Разберемся с первым слоем. Для $\Omega_1$ нам дано (\ref{eq:start2}). Домножим (\ref{eq:start2}) на $v$ с обеих сторон и проинтегрируем по области $\Omega_1$. Соответственно, получим:
+$$
+    \int_{\Omega_1}\pdt{u_1}vdx = \int_{\Omega_1}^{}\psi vdx
+$$
+
+Распишем первую производную по $t$ по разностной формуле $\pdt{u} = \frac{u^1 - u_0}{\tau}$. Соответственно, получим:
+\begin{equation}
+    \int_{\Omega_1}^{}\frac{u^1 - u_0}{\tau}vdx = \int_{\Omega_1}^{}\psi vdx
+    \label{eq:second-layer}
+\end{equation}
+
+Перенесем все части с $u^1$ в (\ref{eq:second-layer}) в левую часть, а остальные - в правую. Получим:
+\begin{equation}
+    \int_{\Omega_1}^{}u_1^1 vdx= \tau\int_{\Omega_1}^{}\psi vdx + \int_{\Omega_1}^{}\phi_1 vdx
+    \label{eq:second-layer-mke-form}
+\end{equation}
+
+Из (\ref{eq:second-layer-mke-form}) выделим следующие члены:
+
+\begin{equation}
+    a_1(u_1^1,v) = \int_{\Omega_1}^{}u_1^1 vdx
+    \label{eq:second-layer-a}
+\end{equation}
+
+\begin{equation}
+    L_1(v) = \tau\int_{\Omega_1}^{}\psi vdx + \int_{\Omega_1}^{}\phi_1 vdx
+    \label{eq:second-layer-l}
+\end{equation}
+
+В литературе $a$ называется билинейной формой, а $L$ - линейной формой.
+
+Так как у нас нет условий на $\Omega_2$ для первого слоя, то необходимо использовать (\ref{eq:def2}). Домножим (\ref{eq:def2}) на $v$ с обеих сторон и проинтегрируем по пространству $\Omega_2$. Получим:
+
+\begin{equation}
+    \int_{\Omega_2}^{}\frac{u_2^1 - u_2^0}{\tau}vdx = \int_{\Gamma}k_1(\grad u_1^1, \vec{n})vdS - \int_{\Omega_2}k_2(grad u_2^1, gradv)dx + \int_{\Omega_2}f_2vdx
+    \label{eq:v-2-mke}
+\end{equation}
+
+Для производной $u$ по $t$ использовали разностную подстановку определенную выше. 
+
+Таким образом, для первого слоя для $\Omega_2$ получили следующие линейные и билинейные формы:
+
+\begin{equation}
+    a_2(u_2^1, v) = \int_{\Omega_2}^{}\frac{u_2^1 - u_2^0}{\tau}vdx
+    \label{eq:second-layer-omega2-a}
+\end{equation}
+
+\begin{equation}
+    L_2(v) = \int_{Г}^{}k_1(\grad u_1^1, \vec{n})vdS - \int_{\Omega_2}^{}k_2(gradu_2^1, gradv)dx + \int_{\Omega_2}^{}f_2vdx
+    \label{eq:second-layer-omega2-L}
+\end{equation}
+
+
+Теперь, когда у нас есть все данные для нулевого и первого слоя - распишем задачу для $n=2,\ldots$.
+
+Вариационная задача строится аналогичным образом: домножаем уравнения (\ref{eq:def1})-(\ref{eq:def2}) на $v \in V$ с обеих сторон
+и интегрируем их по пространству. Уравнение (\ref{eq:def1}) интегрируем по пространству
+$\Omega_1$, уравнение (\ref{eq:def2}) интегрируем по пространству $\Omega_2$. \\
+
 Для преобразования подыинтегральных выражений вида $ div(\ov a) v$ применяем формулу Остроградского:
 
 $$ div(\ov a) v = div(\ov a v) - (\ov a, gradv)$$
@@ -57,7 +117,7 @@ $\ov n$ - внешняя нормаль к области $\Omega_1$ от гра
 Произведем дискретизацию по времени. Разобьем отрезок $[0, T]$ на $N$ частей с шагом $\tau$
 и распишем член $\pdtt{u}$ и $\pdt{u}$ по формуле разностной производной:
 \begin{equation}
-     \pdt{u} = \frac{u^{n+1}u^{n}}{\tau} 
+     \pdt{u} = \frac{u^{n+1} - u^{n}}{\tau} 
      \label{eq:pdt-discr}
 \end{equation}
 \begin{equation}
@@ -86,7 +146,6 @@ $$\int_{\Omega_1} \frac{u_1^1-u_1^0}{\tau}vdx = \int_{\Omega_1}\psi vdx $$
 $$ a_1(u^{n + 1}) = \int_{\Omega_1}u_1vdx $$
 $$ L_2(v) = \int_{\Omega_1}\varphi_1 vdx + \tau\int_{\Omega_1}\psi vdx $$
 
-В литературе $a$ называется билинейной формой, а $L$ - линейной формой.
 
 Таким образом мы получили разложение для $\Omega_1$ на первом слое. Теперь мы должны получить соответствующее разложение для $\Omega_2$. Для этого воспользуемся уравнением (\ref{eq:generic});
 
