@@ -1,15 +1,10 @@
 
-\renewcommand{\rmdefault}{ftm} % times new roman
+%\renewcommand{\rmdefault}{ftm} % times new roman
 \onehalfspacing
 \newcommand{\likeheader}[1]{
 	\begin{center}
 	\textbf{\MakeUppercase{#1}}
 	\end{center}
-}
-\newcommand{\soeq}[1]{%equals auto numeration
-\begin{equation}
-	#1
-\end{equation}
 }
 \newcommand{\anonsection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}%without numeration in table of contents 
 % dot filling, see below
@@ -39,4 +34,8 @@
      \renewcommand{\l@subsection}{\@dottedtocline{2}{0.8cm}{0.8cm}}
      \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
      \renewcommand{\subsection}{\@startsection{subsection}{2}{0.6cm}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus.2ex}{\bfseries}}
+\makeatother
+
+\makeatletter
+\renewcommand\@biblabel[1]{#1.} % нормальная нумерация источником
 \makeatother

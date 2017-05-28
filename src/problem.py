@@ -26,7 +26,6 @@ boundaries = define_mesh2_boundaries(mesh2)
 
 V2 = FunctionSpace(mesh2, "Lagrange", 1)
 u_omega1_layer0 = interpolate(Expression(u1_def), V2)
-bcs = [DirichletBC(V2, u_omega1_layer0, boundaries, 2), DirichletBC(V2, 0, boundaries, 1)]
 
 # --- Define measures
 ds = Measure("ds")[boundaries]
@@ -78,9 +77,6 @@ while t <= T:
     v = TestFunction(V)
     f1.t = t
     f2.t = t
-    a = u_np1*v*dx(1) + tau*u_np1*v*dx(2) + (tau**2)*inner(grad(u_np1), grad(v))*dx
-    # a = 1/t**2*u_np1*v*dx(1) + inner(grad(u_np1), grad(v))*dx
-    L = (2*u_n - u_nm1)*v*dx(1) + tau * u_n * v * dx(2) + tau**2 * f1 * v * dx(1) + tau**2 * f2 * v * dx(2)
     # L = f1*v*dx(1) + f2*v*dx(2) + 1/t**2*(2*u_1 - u_0)*v*dx(1)
 
     u_np1 = Function(V)

@@ -41,7 +41,7 @@ def define_mesh2_boundaries ( mesh ) :
     boundaries.set_all(0)
     class DirichletBCBoundary(SubDomain):
         def inside(self, x, on_boundary):
-            return on_boundary and x[0] - 1 < DOLFIN_EPS and x[0] - 0.5 > DOLFIN_EPS
+            return on_boundary and x[0] - 1 < DOLFIN_EPS and x[0] - 0.5
     d_boundary = DirichletBCBoundary()
     d_boundary.mark(boundaries,1)
     class Gamma(SubDomain) :
